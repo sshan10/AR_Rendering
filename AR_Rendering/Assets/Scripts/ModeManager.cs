@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
+using HoloToolkit.Unity.SpatialMapping;
 
 public class ModeManager : MonoBehaviour
 {
-    public GameObject MenuObject;
+    public GameObject menuObject;
     public float menuGeneratingDistance = 1f;
+    public GameObject spatialMappingObject;
 
     Transform initialTransform;
     Transform cameraTransform;
@@ -19,7 +21,7 @@ public class ModeManager : MonoBehaviour
         modeSelecting = false;
         cameraTransform = Camera.main.transform;
         initialTransform = transform;
-        menuAnimator = MenuObject.GetComponent<Animator>();
+        menuAnimator = menuObject.GetComponent<Animator>();
     }
 
     //Menu UI Managing
@@ -27,7 +29,7 @@ public class ModeManager : MonoBehaviour
     {
         if(modeSelecting == false)
         {
-            MenuObject.transform.position = cameraTransform.forward * menuGeneratingDistance;
+            menuObject.transform.position = cameraTransform.forward * menuGeneratingDistance;
             //Translate menuObject
             transform.rotation = Quaternion.LookRotation(-cameraTransform.forward, cameraTransform.transform.up);
             //Rotate menuObject towards the player
@@ -41,8 +43,8 @@ public class ModeManager : MonoBehaviour
     IEnumerator WaitForAnimAndinitializeMenu()
     {
         yield return new WaitForSeconds(0.55f);
-        MenuObject.transform.rotation = initialTransform.rotation;
-        MenuObject.transform.position = initialTransform.position;
+        menuObject.transform.rotation = initialTransform.rotation;
+        menuObject.transform.position = initialTransform.position;
 
         yield return null;
     }
@@ -58,5 +60,24 @@ public class ModeManager : MonoBehaviour
         }
     }
     //UI end
+
+    void SpatialMode()
+    {
+        spatialMappingObject.GetComponent<SpatialMappingObserver>().enabled = true;
+        spatialMappingObject.GetComponent<SpatialMappingManager>().DrawVisualMeshes = true;
+    }
+
+    void MappingMode()
+    {
+        spatialMappingObject.GetComponent<SpatialMappingObserver>().enabled = false;
+        spatialMappingObject.GetComponent<SpatialMappingManager>().DrawVisualMeshes = true;
+    }
+
+    void PlayMode()
+    {
+        spatialMappingObject.GetComponent<SpatialMappingObserver>().enabled = false;
+        spatialMappingObject.GetComponent<SpatialMappingManager>().DrawVisualMeshes = false;
+    }
+
 
 }

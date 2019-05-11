@@ -334,6 +334,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &894129826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000010302963436, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
+    type: 3}
+  m_PrefabInstance: {fileID: 1977087282}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &928999671
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -666,8 +672,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f66f13c9689be418412fdfaf6a5b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuObject: {fileID: 970650960}
+  menuObject: {fileID: 970650960}
   menuGeneratingDistance: 1
+  spatialMappingObject: {fileID: 894129826}
 --- !u!1 &1366515802
 GameObject:
   m_ObjectHideFlags: 0
