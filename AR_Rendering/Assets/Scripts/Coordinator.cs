@@ -6,6 +6,10 @@ public class Coordinator : MonoBehaviour
 {
     public GameObject RayCameraPrefab;
     public GameObject LightPrefab;
+    public GameObject DebugBoxPrefab;
+    public Transform DebugCanvasTransform;
+
+    public TMPro.TextMeshProUGUI DebugText;
 
     private Queue<InferenceResult> workQueue = null;
 
@@ -51,6 +55,7 @@ public class Coordinator : MonoBehaviour
             return;
         }
 
+        int count = 0;
         foreach(DetectionBox box in data.DetectionBoxes)
         {
             Vector3 boxCenter = GetBoxCenter(box.min, box.max);
@@ -72,12 +77,16 @@ public class Coordinator : MonoBehaviour
                 Vector3 position = hit.point;
                 
                 GameObject lightObject = CreateLight(position, id, lightIntensity, colorTemperature);
+
+                count++;
             }
 
             // debug
             Vector3 camPos = rayCamera.transform.position;
             Debug.LogFormat("Camera: ({0}, {1}, {2}), Ray: ({3}, {4}, {5})", camPos.x, camPos.y, camPos.z, ray.direction.x, ray.direction.y, ray.direction.z);
         }
+
+        DebugText.text = string.Format("Box count: {0}, hitted ray: {1}", data.DetectionBoxes.Length, count);
 
         Destroy(rayCameraObject);
     }
@@ -101,16 +110,25 @@ public class Coordinator : MonoBehaviour
         }
 
         GameObject lightObject = Instantiate(LightPrefab, position, Quaternion.identity, this.gameObject.transform);
-        LightingManager lightingManager = lightObject.GetComponent<LightingManager>() as LightingManager;
+        Light light = lightObject.GetComponent<Light>();
+        light.type = LightType.Point;
+        light.intensity = intensity * 50f;
+        light.color = color;
 
-        if(lightingManager == null)
+        GameObject debugBox = Instantiate(DebugBoxPrefab);
+        debugBox.transform.SetParent(DebugCanvasTransform);
+        debugBox.transform.position = lightObject.transform.position;
+
+        DebugBoxManager debugBoxManager = debugBox.GetComponent<DebugBoxManager>() as DebugBoxManager;
+
+        if(debugBoxManager == null)
         {
             Debug.Log("light - LightingManager: missing componet");
             Destroy(lightObject);
             return null;
         }
 
-        lightingManager.SetParams(id, intensity, color);
+        debugBoxManager.SetParams(id, intensity, color);
 
         return lightObject;
     }

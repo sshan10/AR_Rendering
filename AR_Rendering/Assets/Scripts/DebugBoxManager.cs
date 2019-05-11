@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class LightingManager : MonoBehaviour
+public class DebugBoxManager : MonoBehaviour
 {
     public Image Box;
     public TextMeshProUGUI Intensity;
