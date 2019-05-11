@@ -5,32 +5,37 @@ using HoloToolkit.Unity.InputModule;
 
 public class ModeManager : MonoBehaviour
 {
-    public Animator MenuAnimator;
     public GameObject MenuObject;
-    public float menuGeneratingDistance;
+    public float menuGeneratingDistance = 1f;
 
     Transform initialTransform;
     Transform cameraTransform;
-
-    public static bool MenuActivating;
+    Animator menuAnimator;
+    bool modeSelecting;
 
     // Start is called before the first frame update
     void Start()
     {
-        MenuActivating = false;
+        modeSelecting = false;
         cameraTransform = Camera.main.transform;
         initialTransform = transform;
+        menuAnimator = MenuObject.GetComponent<Animator>();
     }
 
     //Menu UI Managing
     public void ActivateMenu()
     {
-        MenuObject.transform.position = cameraTransform.forward * menuGeneratingDistance;
-        transform.rotation = Quaternion.LookRotation(-cameraTransform.forward, cameraTransform.transform.up);
+        if(modeSelecting == false)
+        {
+            MenuObject.transform.position = cameraTransform.forward * menuGeneratingDistance;
+            //Translate menuObject
+            transform.rotation = Quaternion.LookRotation(-cameraTransform.forward, cameraTransform.transform.up);
+            //Rotate menuObject towards the player
 
-        MenuAnimator.SetTrigger("HoldGestureWithoutSelected");
+            menuAnimator.SetTrigger("HoldGestureWithoutSelected");
 
-        MenuActivating = false;
+            modeSelecting = true;
+        }
     }
 
     IEnumerator WaitForAnimAndinitializeMenu()
@@ -46,8 +51,11 @@ public class ModeManager : MonoBehaviour
     //called when menu Tapped
     void DeActivateMenu()
     {
-        MenuAnimator.SetTrigger("MenuTapped");
-        StartCoroutine("WaitForAnimAndinitializeMenu");
+        if (modeSelecting)
+        {
+            menuAnimator.SetTrigger("MenuTapped");
+            StartCoroutine("WaitForAnimAndinitializeMenu");
+        }
     }
     //UI end
 
