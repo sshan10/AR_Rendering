@@ -451,6 +451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RayCameraPrefab: {fileID: 4265504285234693746, guid: a0191960f104b65418c07e0e9a9f2038,
     type: 3}
+  LightPrefab: {fileID: 5705391030029025789, guid: 81abae6cf3626d6478935a37744274a5,
+    type: 3}
 --- !u!1 &970650960
 GameObject:
   m_ObjectHideFlags: 0
