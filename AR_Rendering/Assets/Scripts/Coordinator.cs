@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Coordinator : MonoBehaviour
 {
-    public static Coordinator Instance = null;
     public GameObject RayCameraPrefab;
+    public GameObject LightPrefab;
 
     private Queue<InferenceResult> workQueue = null;
+
+    public static Coordinator Instance = null;
 
     public void Start()
     {
@@ -64,13 +66,13 @@ public class Coordinator : MonoBehaviour
             // create light
             if(Physics.Raycast(ray, out hit))
             {
-                LightType lightType = GetLightType(box.id);
+                int id = box.id;
                 float lightIntensity = GetLightIntensity(box.intensity);
                 Color colorTemperature = GetColorTemperature(box.color);
+                Vector3 position = hit.point;
                 
-                CreateLight(lightType, lightIntensity, colorTemperature);
+                GameObject lightObject = CreateLight(position, id, lightIntensity, colorTemperature);
             }
-
 
             // debug
             Vector3 camPos = rayCamera.transform.position;
@@ -90,28 +92,32 @@ public class Coordinator : MonoBehaviour
         return center;
     }
 
-    GameObject CreateLight(LightType lightType, float intensity, Color color)
+    GameObject CreateLight(Vector3 position, int id, float intensity, Color color)
     {
-        GameObject lightObject = null;
+        if(LightPrefab == null)
+        {
+            Debug.Log("please assign to light prefab.");
+            return null;
+        }
 
-        // instantiate
-        // set type, intensity, color temperature
+        GameObject lightObject = Instantiate(LightPrefab, position, Quaternion.identity, this.gameObject.transform);
+        LightingManager lightingManager = lightObject.GetComponent<LightingManager>() as LightingManager;
+
+        if(lightingManager == null)
+        {
+            Debug.Log("light - LightingManager: missing componet");
+            Destroy(lightObject);
+            return null;
+        }
+
+        lightingManager.SetParams(id, intensity, color);
 
         return lightObject;
     }
-
-    LightType GetLightType(int label_id)
-    {
-        LightType type = LightType.Point;
-
-        // add logic
-
-        return type;
-    }
-
+    
     float GetLightIntensity(float intensity)
     {
-        float lightIntensity = intensity * 1f;
+        float lightIntensity = intensity * 50f;
 
         // add logic
 
