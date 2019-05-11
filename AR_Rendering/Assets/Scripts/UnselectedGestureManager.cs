@@ -8,7 +8,6 @@ using TMPro;
 public class UnselectedGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
     public ScreenCapture captureObject;
-    public TextMeshProUGUI DebugText;
         
 
     // Start is called before the first frame update
@@ -33,7 +32,6 @@ public class UnselectedGestureManager : MonoBehaviour, IInputClickHandler, IHold
 
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
-        DebugText.text = "tapped";
         Debug.Log("tapped");
         if (ScreenCapture.capturing == false)
         {
