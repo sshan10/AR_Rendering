@@ -7,11 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public class ScreenCapture : MonoBehaviour
-{
-    /*Debug variable*/
-    public TextMeshProUGUI DebugText;
-    /*Debug variable end*/
-    
+{    
     public static bool capturing = false;
 
     public Image image;
