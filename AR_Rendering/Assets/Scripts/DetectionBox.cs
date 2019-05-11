@@ -55,4 +55,18 @@ public class DetectionBox
 
         return text;
     }
+
+    public string ToDebuggingString()
+    {
+        string text = string.Empty;
+
+        text += string.Format("id: {0}\n", id);
+        text += string.Format("score: {0}\n", score);
+        text += string.Format("min: ({0}, {1})\n", min.x, min.y);
+        text += string.Format("max: ({0}, {1})\n", max.x, max.y);
+        text += string.Format("color: ({0}, {1}, {2})\n", color.r, color.g, color.b);
+        text += string.Format("normalized-intensity: {0}", intensity);
+
+        return text;
+    }
 }

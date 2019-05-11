@@ -1,17 +1,11 @@
 ﻿using UnityEngine;
 using System.Linq;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine.XR.WSA.WebCam;
-using UnityEngine.UI;
-
-using TMPro;
 
 public class ScreenCapture : MonoBehaviour
 {    
     public static bool capturing = false;
-
-    public Image image;
-
+    
     PhotoCapture photoCaptureObject = null;
     Texture2D capturedTexture = null;
 
@@ -62,11 +56,8 @@ public class ScreenCapture : MonoBehaviour
         {
             Client.Instance.SendToServer(message);
         }
-
-        image.sprite = ImageUtil.TextureToSprite(capturedTexture);
-
+        
         capturedTexture = null;
-
         capturing = false;
     }
 
