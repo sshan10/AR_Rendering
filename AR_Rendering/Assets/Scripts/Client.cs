@@ -112,7 +112,10 @@ public class Client : MonoBehaviour
 
                         string data = Encoding.UTF8.GetString(buffer).Trim();
                         InferenceResult result = ParseData(data);
-                        Mapping(result);
+                        if(result != null)
+                        {
+                            Mapping(result);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -232,23 +235,41 @@ public class Client : MonoBehaviour
 
     InferenceResult ParseData(string data)
     {
-        string[] parts = data.Split(':');
+        string[] parts;
+        string[] hmdPositionRaw;
+        string[] hmdRotationRaw;
+        string[] boxes;
 
-        string[] hmdPositionRaw = parts[0].Split('|');
-        Vector3 hmdPosition = RawToVector3(hmdPositionRaw);
+        Vector3 hmdPosition, hmdRotation;
+        DetectionBox[] detectionBoxes;
+        InferenceResult result = null;
 
-        string[] hmdRotationRaw = parts[1].Split('|');
-        Vector3 hmdRotation = RawToVector3(hmdRotationRaw);
-
-        string[] boxes = parts[2].Split('\\');
-        DetectionBox[] detectionBoxes = new DetectionBox[boxes.Length];
-        for (int i = 0; i < boxes.Length; i++)
+        try
         {
-            string[] boxData = boxes[i].Split('|');
-            detectionBoxes[i] = new DetectionBox(boxData);
+            parts = data.Split(':');
+
+            hmdPositionRaw = parts[0].Split('|');
+            hmdPosition = RawToVector3(hmdPositionRaw);
+
+            hmdRotationRaw = parts[1].Split('|');
+            hmdRotation = RawToVector3(hmdRotationRaw);
+
+            boxes = parts[2].Split('\\');
+
+            detectionBoxes = new DetectionBox[boxes.Length];
+            for (int i = 0; i < boxes.Length; i++)
+            {
+                string[] boxData = boxes[i].Split('|');
+                detectionBoxes[i] = new DetectionBox(boxData);
+            }
+
+            result = new InferenceResult(hmdPosition, hmdRotation, detectionBoxes);
+        }
+        catch
+        {
+            result = null;
         }
 
-        InferenceResult result = new InferenceResult(hmdPosition, hmdRotation, detectionBoxes);
         return result;
     }
 
