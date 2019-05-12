@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System;
 
 using System.Text;
-using TMPro;
 
 #if !UNITY_EDITOR
 using Windows.Networking;
@@ -38,8 +37,6 @@ public class Client : MonoBehaviour
 {
     public static Client Instance = null;
 
-    public TextMeshProUGUI DebugText;
-
     private string SERVER_IP = "";
     private int SERVER_PORT = 6067;
 
@@ -49,50 +46,31 @@ public class Client : MonoBehaviour
 
     private bool serverRunning = true;
 
-    private DetectionBox[] dboxes = null;
-
     private const int BUFFER_MAX_SIZE = 1024;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
-        Connect();
-    }
-
-    void Update()
+    }        
+    
+    void Start()
     {
-        if(dboxes != null)
-        {
-            DebugDetectionBox(dboxes);
-            dboxes = null;
-        }
+        Connect();
+        //DebugWebcamList();
     }
 
     void OnApplicationQuit()
     {
-        serverRunning = false;
-
-        if (writer != null)
-        {
-            writer.Dispose();
-            writer = null;
-        }
-
-        if(reader != null)
-        {
-            reader.Dispose();
-            reader = null;
-        }
+        Disconnect();   
     }
 
     public void Connect()
     {
         string ip = "10.20.11.122";
-        DebugText.text = string.Format("Server IP: {0}", ip);
+        Debug.Log(string.Format("Server IP: {0}", ip));
 
         try
         {
-
             Task.Run(async () =>
             {
                 try
@@ -113,7 +91,6 @@ public class Client : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    DebugText.text = e.Message;
                     Debug.Log(e.Message);
                     return;
                 }            
@@ -134,12 +111,11 @@ public class Client : MonoBehaviour
                         await reader.ReadAsync(buffer, 0, buffer.Length);
 
                         string data = Encoding.UTF8.GetString(buffer).Trim();
-                        ParseData(data);
-
+                        InferenceResult result = ParseData(data);
+                        Mapping(result);
                     }
                     catch (Exception e)
                     {
-                        DebugText.text = e.Message + "\n" + e.StackTrace;
                         Debug.Log(e.Message + "\n" + e.StackTrace);
                         serverRunning = false;
                         break;
@@ -160,17 +136,30 @@ public class Client : MonoBehaviour
         }
         catch(Exception ee)
         {
-            DebugText.text = ee.Message + "\n" + ee.StackTrace;
             reader = null;
             writer = null;
         }
     }
 
-    public void SendToServer(Message message)
+    public void Disconnect()
     {
-        DebugText.text = "send processing start...";        
-        DebugText.text = message.ToString();
+        serverRunning = false;
 
+        if (writer != null)
+        {
+            writer.Dispose();
+            writer = null;
+        }
+
+        if (reader != null)
+        {
+            reader.Dispose();
+            reader = null;
+        }
+    }
+
+    public void SendToServer(Message message)
+    {       
         try
         {
             Task.Run(() =>
@@ -215,7 +204,7 @@ public class Client : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    DebugText.text = e.Message + "\n" + e.StackTrace;
+                    Debug.Log(e.Message + "\n" + e.StackTrace);
                     reader = null;
                     writer = null;
                 }
@@ -223,7 +212,7 @@ public class Client : MonoBehaviour
         }
         catch (Exception ee)
         {
-            DebugText.text = ee.Message + "\n" + ee.StackTrace;
+            Debug.Log(ee.Message + "\n" + ee.StackTrace);
             reader = null;
             writer = null;
         }
@@ -240,8 +229,8 @@ public class Client : MonoBehaviour
     {
         return (reader != null) && (writer != null);
     }
-    
-    void ParseData(string data)
+
+    InferenceResult ParseData(string data)
     {
         string[] parts = data.Split(':');
 
@@ -260,14 +249,11 @@ public class Client : MonoBehaviour
         }
 
         InferenceResult result = new InferenceResult(hmdPosition, hmdRotation, detectionBoxes);
-
-        dboxes = detectionBoxes;
-        DebugDetectionBox(detectionBoxes);
+        return result;
     }
 
     Vector3 RawToVector3(string[] raw)
     {
-
         Vector3 v = new Vector3()
         {
             x = float.Parse(raw[0]),
@@ -281,15 +267,24 @@ public class Client : MonoBehaviour
     void DebugDetectionBox(DetectionBox[] boxes)
     {
         string result = string.Empty;
-        for (int i = 0; i < boxes.Length; i++)
+        foreach(DetectionBox box in boxes)
         {
-            result += string.Format("id: {0}, score: {1}\n", boxes[i].id, boxes[i].score);
-            result += string.Format("min: ({0}, {1})\n", boxes[i].min.x, boxes[i].min.y);
-            result += string.Format("min: ({0}, {1})\n", boxes[i].max.x, boxes[i].max.y);
-            result += string.Format("color: ({0}, {1}, {2})\n", boxes[i].color.r, boxes[i].color.g, boxes[i].color.b);
-            result += string.Format("intensity: {0}\n\n", boxes[i].intensity);
+            result += string.Format("{0}\n", box.ToDebuggingString());
         }
 
-        DebugText.text = result;
+        Debug.Log(result);
+    }
+
+    private void Mapping(InferenceResult result)
+    {
+        Coordinator.Instance.EnqueueLightData(result);
+    }    
+
+    void DebugWebcamList()
+    {
+        foreach (var device in WebCamTexture.devices)
+        {
+            Debug.LogFormat("Name: {0}, Kind: {1}", device.name, device.kind.ToString());
+        }
     }
 }

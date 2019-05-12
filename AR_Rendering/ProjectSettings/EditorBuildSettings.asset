@@ -17,4 +17,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Run/PlayScene.unity
     guid: e37453934d590814eae8a655c1cfd31e
+
   m_configObjects: {}
