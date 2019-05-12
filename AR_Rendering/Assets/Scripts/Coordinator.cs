@@ -33,6 +33,7 @@ public class Coordinator : MonoBehaviour
         }
     }
 
+    private readonly string TAG_LIGHT = "Light";
     void CoordinateMapping(InferenceResult data)
     {
         if(RayCameraPrefab == null)
@@ -64,6 +65,12 @@ public class Coordinator : MonoBehaviour
             // create light
             if(Physics.Raycast(ray, out hit))
             {
+                // in case of a collision with already mapped light's collider
+                if(hit.collider.CompareTag(TAG_LIGHT))
+                {
+                    continue;
+                }
+
                 GameObject lightObject = LightManager.Instance.CreateLight(box, hit.point, debug: true);
             }
         }
