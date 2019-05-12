@@ -4,47 +4,130 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour
 {
-    public GameObject lightPrefab;
-    public List<GameObject> lightList;
+    public GameObject PointLightPrefab;
+    public GameObject DebugBoxPrefab;
+    public Transform DebugCanvasTransform;
 
-    void Update()
+    public static LightManager Instance = null;
+
+    private List<LightInfo> lights = null;
+
+    void Awake()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                Debug.DrawRay(this.transform.position, hit.point - this.transform.position, Color.red, 3f);
-                CreateLight(hit.point);
-            }
-        }
+        Instance = this;
+        lights = new List<LightInfo>();
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    public void CreateLight(Vector3 spawnPoint)
+    private void AddLight(LightInfo data)
     {
-        GameObject lightObject = Instantiate(lightPrefab, spawnPoint, Quaternion.identity, this.transform);
-        Light light = lightObject.GetComponent<Light>();
-        if(lightObject == null || light == null)
+        lights.Add(data);
+    }
+
+    public LightInfo[] GetLights()
+    {
+        return lights.ToArray();
+    }
+
+    public GameObject CreateLight(DetectionBox box, Vector3 hitPoint, bool debug = false)
+    {
+        if (PointLightPrefab == null)
         {
-            Debug.Log("No light was produced!");
-            return;
+            Debug.Log("please assign to light prefab.");
+            return null;
         }
 
-        lightList.Add(lightObject);
+        GameObject lightObject = Instantiate(PointLightPrefab);        
+        lightObject.transform.position = hitPoint;
+        lightObject.transform.eulerAngles = Quaternion.identity.eulerAngles;
+        lightObject.transform.SetParent(this.gameObject.transform);
 
-        int num = lightList.Count;
-        float range = Random.Range(5f, 15f);
-        Color color = Random.ColorHSV();
-        float intensity = Random.Range(.1f, 3f);
+        LightInfo lightInfo = new LightInfo()
+        {
+            position = lightObject.transform.position,
+            rotation = lightObject.transform.eulerAngles,        
+            light = ApplyLightProperties(lightObject, box)
+        };
 
-        light.type = LightType.Point;
-        light.range = range;
-        light.color = color;
-        //light.lightmappingMode : Deprecated
-        light.intensity = intensity;
+        AddLight(lightInfo);
 
-        Debug.LogFormat("Light[{0}] Position: {1}, Range: {2}, Color: {3}, Intensity: {4}", num, spawnPoint, range, color, intensity);
+
+        
+        if(debug)
+        {
+            CreateDebugBox(lightInfo);
+        }
+
+        return lightObject;
+    }
+
+    public GameObject CreateDebugBox(LightInfo info)
+    {
+        GameObject debugBox = Instantiate(DebugBoxPrefab);
+        debugBox.transform.SetParent(DebugCanvasTransform);
+        debugBox.transform.position = info.position;
+
+
+        DebugBoxManager debugBoxManager = debugBox.GetComponent<DebugBoxManager>() as DebugBoxManager;
+        debugBoxManager.SetParams(info.light.type, info.light.intensity, info.light.color);
+
+        return debugBox;
+    }
+
+    private Light ApplyLightProperties(GameObject lightObject, DetectionBox box)
+    {
+        Light light = lightObject.GetComponent<Light>();
+
+        light.type = GetLightType(box.id);
+        light.intensity = GetLightIntensity(box.intensity);
+        light.color = GetColorTemperature(box.color);
+
+        return light;
+    }
+
+    LightType GetLightType(int id)
+    {
+        LightType type = LightType.Point;
+
+        switch(id)
+        {
+            case 1:
+                type = LightType.Point;
+                break;
+
+            case 2:
+                type = LightType.Point;
+                break;
+
+            case 3:
+                type = LightType.Spot;
+                break;
+        }
+
+        return type;
+    }
+
+    float GetLightIntensity(float intensity)
+    {
+        float lightIntensity = intensity * 50f;
+
+        // add logic
+
+        return lightIntensity;
+    }
+
+    Color GetColorTemperature(Color color)
+    {
+        Color colorTemperature = color;
+
+        // add logic.
+
+        return colorTemperature;
+    }
+
+    void GetRange(LightType type, out float min, out float max)
+    {
+        min = 0f;
+        max = 100f;
     }
 }

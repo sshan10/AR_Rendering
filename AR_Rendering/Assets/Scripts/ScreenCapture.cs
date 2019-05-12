@@ -1,24 +1,21 @@
 ﻿using UnityEngine;
 using System.Linq;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine.XR.WSA.WebCam;
-using UnityEngine.UI;
-
-using TMPro;
 
 public class ScreenCapture : MonoBehaviour
 {    
     public static bool capturing = false;
-
-    public Image image;
-
+    
     PhotoCapture photoCaptureObject = null;
     Texture2D capturedTexture = null;
 
+    private Vector3 hmdPosition, hmdRotation;
     
     public void Capture()
     {
         capturing = true;
+
+        SetHMDTransform();
 
         Resolution webcamResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
         capturedTexture = new Texture2D(webcamResolution.width, webcamResolution.height);
@@ -62,11 +59,7 @@ public class ScreenCapture : MonoBehaviour
         {
             Client.Instance.SendToServer(message);
         }
-
-        image.sprite = ImageUtil.TextureToSprite(capturedTexture);
-
-        capturedTexture = null;
-
+        
         capturing = false;
     }
 
@@ -75,29 +68,21 @@ public class ScreenCapture : MonoBehaviour
         photoCaptureObject.Dispose();
         photoCaptureObject = null;
     }
+
+    private void SetHMDTransform()
+    {
+        hmdPosition = Camera.main.transform.position;
+        hmdRotation = Camera.main.transform.eulerAngles;
+    }
     
     private Vector3 GetHMDPosition()
     {
-        if(Camera.main != null)
-        {
-            return Camera.main.transform.position;
-        }
-        else
-        {
-            return Vector3.zero;
-        }
+        return hmdPosition;
     }
 
     private Vector3 GetHMDRotation()
     {
-        if (Camera.main != null)
-        {
-            return Camera.main.transform.eulerAngles;
-        }
-        else
-        {
-            return Vector3.zero;
-        }
+        return hmdRotation;
     }
 
     private byte[] TextureToRawdata(Texture2D texture)
