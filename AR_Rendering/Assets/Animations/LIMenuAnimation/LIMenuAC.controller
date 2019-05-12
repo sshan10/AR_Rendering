@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SPMenuAC
+  m_Name: LIMenuAC
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: HoldGestureWithoutSelected
@@ -127,7 +127,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7a615e430ae80954c9f62721541d758c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 5af09ab99813c3549b5461e1793a8bf8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -154,7 +154,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5895e8b829e66e54e96c8c94a7f35c3c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 338a9eda48f35964dbd56f0dc7f35872, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -181,7 +181,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7a615e430ae80954c9f62721541d758c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 5af09ab99813c3549b5461e1793a8bf8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
