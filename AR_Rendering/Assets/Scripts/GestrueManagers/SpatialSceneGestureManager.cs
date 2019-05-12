@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using HoloToolkit.Unity.InputModule;
 
 using TMPro;
@@ -16,6 +16,14 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
         yield return null;
     }
 
+    IEnumerator ButtonDownToLoadNewScene()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        yield return null;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +34,10 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
     // IHoldHandler는 Completed, Canceled, Started 세가지에 대한 구현 메소드가 필요하다.
     public void OnHoldStarted(HoldEventData eventData)
     {
-        StartCoroutine(OnHold());
+        if (!MenuManager.menuSelecting)
+        {
+            StartCoroutine(OnHold());
+        }
     }
     public void OnHoldCompleted(HoldEventData eventData)
     {
@@ -43,13 +54,16 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
     // IInputClickHandler 는 OnInputClicked에 대한 메소드 구현이 필요하다.
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
+        Debug.Log("tap");
         if(MenuManager.menuSelecting)
         {
-            Ray ray;
             RaycastHit hit;
-            if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)),50f,10))
+            if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)),out hit, 1<<9))
             {
-
+                Debug.Log("Menu selected");
+                MenuManagerObject.GetComponent<MenuManager>().DeActivateMenu();
+                StartCoroutine(ButtonDownToLoadNewScene());
+                MenuManager.menuSelecting = false;
             }
         }
     }

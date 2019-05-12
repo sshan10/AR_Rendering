@@ -25,21 +25,19 @@ public class MenuManager : MonoBehaviour
     //Menu UI Managing
     public void ActivateMenu()
     {
-        if(menuSelecting == false)
-        {
-            menuObject.transform.position = mixedRealityCamera.transform.position + mixedRealityCamera.transform.forward * menuGeneratingDistance;
-            //Translate menuObject
-            menuObject.transform.rotation = Quaternion.LookRotation(menuObject.transform.position - mixedRealityCamera.transform.position, mixedRealityCamera.transform.transform.up);
-            //Rotate menuObject towards the player
+        menuObject.transform.position = mixedRealityCamera.transform.position + mixedRealityCamera.transform.forward * menuGeneratingDistance;
+        //Translate menuObject
+        menuObject.transform.rotation = Quaternion.LookRotation(menuObject.transform.position - mixedRealityCamera.transform.position, mixedRealityCamera.transform.transform.up);
+        //Rotate menuObject towards the player
 
-            menuAnimator.SetTrigger("HoldGestureWithoutSelected");
+        menuAnimator.SetTrigger("HoldGestureWithoutSelected");
 
-            menuSelecting = true;
-        }
+        menuSelecting = true;
+        Debug.Log("menuSelecting...");
     }
 
     //called when menu Tapped
-    void DeActivateMenu()
+    public void DeActivateMenu()
     {
         if (menuSelecting)
         {
