@@ -5,7 +5,7 @@ using UnityEngine.XR.WSA.WebCam;
 public class ScreenCapture : MonoBehaviour
 {    
     public static bool capturing = false;
-    
+
     PhotoCapture photoCaptureObject = null;
     Texture2D capturedTexture = null;
 
@@ -59,7 +59,7 @@ public class ScreenCapture : MonoBehaviour
         {
             Client.Instance.SendToServer(message);
         }
-        
+
         capturing = false;
     }
 
