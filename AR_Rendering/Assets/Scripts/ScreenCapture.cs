@@ -3,17 +3,16 @@ using System.Linq;
 using UnityEngine.XR.WSA.WebCam;
 
 public class ScreenCapture : MonoBehaviour
-{    
-    public static bool capturing = false;
+{
+    public static bool Capturing = false;
 
-    PhotoCapture photoCaptureObject = null;
-    Texture2D capturedTexture = null;
-
-    private Vector3 hmdPosition, hmdRotation;
+    private static PhotoCapture photoCaptureObject = null;
+    private static Texture2D capturedTexture = null;
+    private static Vector3 hmdPosition, hmdRotation;
     
-    public void Capture()
+    public static void Capture()
     {
-        capturing = true;
+        Capturing = true;
 
         SetHMDTransform();
 
@@ -38,7 +37,7 @@ public class ScreenCapture : MonoBehaviour
         });
     }
 
-    void OnCapturePhotoToMemory(PhotoCapture.PhotoCaptureResult result, PhotoCaptureFrame photoCaptureFrame)
+    private static void OnCapturePhotoToMemory(PhotoCapture.PhotoCaptureResult result, PhotoCaptureFrame photoCaptureFrame)
     { 
         if(capturedTexture == null)
         {
@@ -60,32 +59,32 @@ public class ScreenCapture : MonoBehaviour
             Client.Instance.SendToServer(message);
         }
 
-        capturing = false;
+        Capturing = false;
     }
 
-    void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result)
+    private static void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result)
     {
         photoCaptureObject.Dispose();
         photoCaptureObject = null;
     }
 
-    private void SetHMDTransform()
+    private static void SetHMDTransform()
     {
         hmdPosition = Camera.main.transform.position;
         hmdRotation = Camera.main.transform.eulerAngles;
     }
     
-    private Vector3 GetHMDPosition()
+    private static Vector3 GetHMDPosition()
     {
         return hmdPosition;
     }
 
-    private Vector3 GetHMDRotation()
+    private static Vector3 GetHMDRotation()
     {
         return hmdRotation;
     }
 
-    private byte[] TextureToRawdata(Texture2D texture)
+    private static byte[] TextureToRawdata(Texture2D texture)
     {
         return texture.EncodeToJPG(100);
     }

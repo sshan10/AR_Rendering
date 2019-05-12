@@ -59,9 +59,9 @@ public class Client : MonoBehaviour
         //DebugWebcamList();
     }
 
-    void OnApplicationQuit()
+    void OnDestroy()
     {
-        Disconnect();   
+        Disconnect();
     }
 
     public void Connect()
