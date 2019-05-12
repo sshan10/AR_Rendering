@@ -48,13 +48,16 @@ public class Client : MonoBehaviour
 
     private const int BUFFER_MAX_SIZE = 1024;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
-        Connect();
-
-        //DebugWebcamList();
     }        
+    
+    void Start()
+    {
+        Connect();
+        //DebugWebcamList();
+    }
 
     void OnApplicationQuit()
     {

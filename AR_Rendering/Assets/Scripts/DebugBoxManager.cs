@@ -6,13 +6,13 @@ public class DebugBoxManager : MonoBehaviour
 {
     public Image Box;
     public TextMeshProUGUI Intensity;
-    public TextMeshProUGUI Index;
     public TextMeshProUGUI Type;
 
-    public void SetParams(int id, float intensity, Color color)
+    public void SetParams(LightType type, float intensity, Color color)
     {
-        this.Index.text = id.ToString();
+        this.Type.text = type.ToString();
         this.Intensity.text = string.Format("{0:0.00}", intensity);
+
         this.Box.color = color;
     }
 

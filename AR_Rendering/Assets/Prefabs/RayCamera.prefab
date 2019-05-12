@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4265504285234693745}
   - component: {fileID: 4265504285234693744}
-  - component: {fileID: 4265504285234693747}
   m_Layer: 0
   m_Name: RayCamera
   m_TagString: Untagged
@@ -56,7 +55,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 16
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -74,11 +73,3 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4265504285234693747
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4265504285234693746}
-  m_Enabled: 1
