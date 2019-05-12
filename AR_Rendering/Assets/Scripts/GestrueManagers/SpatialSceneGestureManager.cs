@@ -5,10 +5,16 @@ using HoloToolkit.Unity.InputModule;
 
 using TMPro;
 
-public class UnselectedGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
+public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
-    public ScreenCapture captureObject;
-    public ModeManager modeManagerObject;        
+    public MenuManager MenuManagerObject;        
+
+    IEnumerator OnHold()
+    {
+        yield return new WaitForSeconds(1f);
+        MenuManagerObject.ActivateMenu();
+        yield return null;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +26,11 @@ public class UnselectedGestureManager : MonoBehaviour, IInputClickHandler, IHold
     // IHoldHandler는 Completed, Canceled, Started 세가지에 대한 구현 메소드가 필요하다.
     public void OnHoldStarted(HoldEventData eventData)
     {
-        Debug.Log("Tap or Hold");
+        StartCoroutine(OnHold());
     }
     public void OnHoldCompleted(HoldEventData eventData)
     {
-        modeManagerObject.ActivateMenu();
+        throw new System.NotImplementedException();
     }
 
     public void OnHoldCanceled(HoldEventData eventData)
@@ -37,16 +43,15 @@ public class UnselectedGestureManager : MonoBehaviour, IInputClickHandler, IHold
     // IInputClickHandler 는 OnInputClicked에 대한 메소드 구현이 필요하다.
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
-        Debug.Log("tapped");
-        if (ScreenCapture.capturing == false && !ModeManager.modeSelecting)
+        if(MenuManager.menuSelecting)
         {
-            captureObject.Capture();
-        }
-        if(ModeManager.modeSelecting)
-        {
+            Ray ray;
+            RaycastHit hit;
+            if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)),50f,10))
+            {
 
+            }
         }
-        //탭 했을때 캡쳐가 진행중이지 않고, 스페이셜 모드일 때 캡쳐 메소드를 호출.
     }
     // Endof InputClickerHandler Event Handler
 
