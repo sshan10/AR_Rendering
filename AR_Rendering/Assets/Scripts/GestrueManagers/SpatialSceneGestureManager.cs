@@ -46,7 +46,7 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
 
     public void OnHoldCanceled(HoldEventData eventData)
     {
-        
+
     }
     // endof IHoldHandler Event Handler
 
