@@ -41,12 +41,12 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
     }
     public void OnHoldCompleted(HoldEventData eventData)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void OnHoldCanceled(HoldEventData eventData)
     {
-        throw new System.NotImplementedException();
+        
     }
     // endof IHoldHandler Event Handler
 
