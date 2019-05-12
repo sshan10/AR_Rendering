@@ -675,6 +675,9 @@ MonoBehaviour:
   menuObject: {fileID: 970650960}
   menuGeneratingDistance: 1
   spatialMappingObject: {fileID: 894129826}
+  buttonS: {fileID: 772216620}
+  buttonL: {fileID: 1366515802}
+  buttonP: {fileID: 977088680}
 --- !u!1 &1366515802
 GameObject:
   m_ObjectHideFlags: 0

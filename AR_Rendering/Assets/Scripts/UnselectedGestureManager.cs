@@ -38,11 +38,15 @@ public class UnselectedGestureManager : MonoBehaviour, IInputClickHandler, IHold
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         Debug.Log("tapped");
-        if (ScreenCapture.capturing == false)
+        if (ScreenCapture.capturing == false && !ModeManager.modeSelecting)
         {
             captureObject.Capture();
         }
-        //탭 했을때 캡쳐가 진행중이지 않다면 캡쳐 메소드를 호출.
+        if(ModeManager.modeSelecting)
+        {
+
+        }
+        //탭 했을때 캡쳐가 진행중이지 않고, 스페이셜 모드일 때 캡쳐 메소드를 호출.
     }
     // Endof InputClickerHandler Event Handler
 
