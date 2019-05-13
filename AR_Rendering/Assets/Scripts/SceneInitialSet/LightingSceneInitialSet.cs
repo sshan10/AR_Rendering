@@ -26,7 +26,6 @@ public class LightingSceneInitialSet : MonoBehaviour
         onSceneGeommetryDivider = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<ObjectSurfaceObserver>();
 
         onSceneMappingObserver.enabled = false;
-        onSceneSpatialManager.DrawVisualMeshes = false;
         // turned private bool variable of SpatialMappingManager.cs "autoStartObserver"to public.
         onSceneSpatialManager.autoStartObserver = false;
         onSceneGeommetryDivider.enabled = false;
