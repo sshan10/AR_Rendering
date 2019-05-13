@@ -4,7 +4,7 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using HoloToolkit.Unity.SpatialMapping;
 
-public class MenuManager : MonoBehaviour
+public class SpatialSceneMenuManager : MonoBehaviour
 {
     public GameObject menuObject;
     public float menuGeneratingDistance = 1f;

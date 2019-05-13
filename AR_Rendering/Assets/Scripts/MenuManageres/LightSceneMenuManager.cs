@@ -45,7 +45,7 @@ public class LightSceneMenuManager : MonoBehaviour
     }
 
     //called when menu Tapped
-    void DeActivateMenu()
+    public void DeActivateMenu()
     {
         if (menuSelecting)
         {

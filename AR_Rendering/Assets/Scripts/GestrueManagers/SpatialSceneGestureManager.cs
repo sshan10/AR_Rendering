@@ -7,12 +7,12 @@ using TMPro;
 
 public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
-    public MenuManager MenuManagerObject;        
+    public SpatialSceneMenuManager SpatialSceneMenuManagerObject;        
 
     IEnumerator OnHold()
     {
         yield return new WaitForSeconds(1f);
-        MenuManagerObject.ActivateMenu();
+        SpatialSceneMenuManagerObject.ActivateMenu();
         yield return null;
     }
 
@@ -34,7 +34,7 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
     // IHoldHandler는 Completed, Canceled, Started 세가지에 대한 구현 메소드가 필요하다.
     public void OnHoldStarted(HoldEventData eventData)
     {
-        if (!MenuManager.menuSelecting)
+        if (!SpatialSceneMenuManager.menuSelecting)
         {
             StartCoroutine(OnHold());
         }
@@ -55,15 +55,15 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         Debug.Log("tap");
-        if(MenuManager.menuSelecting)
+        if(SpatialSceneMenuManager.menuSelecting)
         {
             RaycastHit hit;
             if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)),out hit, 1<<9))
             {
                 Debug.Log("Menu selected");
-                MenuManagerObject.GetComponent<MenuManager>().DeActivateMenu();
+                SpatialSceneMenuManagerObject.GetComponent<SpatialSceneMenuManager>().DeActivateMenu();
                 StartCoroutine(ButtonDownToLoadNewScene());
-                MenuManager.menuSelecting = false;
+                SpatialSceneMenuManager.menuSelecting = false;
             }
         }
     }
