@@ -66,7 +66,8 @@ public class Client : MonoBehaviour
 
     public void Connect()
     {
-        string ip = "10.20.11.122";
+        //string ip = "10.20.11.122";
+        string ip = "192.168.0.4";
         Debug.Log(string.Format("Server IP: {0}", ip));
 
         try
@@ -179,20 +180,18 @@ public class Client : MonoBehaviour
 
 
 
+                    // sending message body : hmd position, hmd rotation, image raw data
+                    List<byte> mergedBuffer = new List<byte>();
 
-                    // sending message body 1/2 : hmd position, hmd rotation, image length
-                    writer.Write(buffer, 0, buffer.Length);
-                    writer.Flush();
+                    // add the hmd position, hmd rotation
+                    mergedBuffer.AddRange(buffer);
 
+                    // add the image raw data
+                    mergedBuffer.AddRange(message.imageRawData);
 
-
-
-                    // sending message body 2/2 : image raw data
-                    int remained = message.imageRawData.Length;
+                    int remained = mergedBuffer.Count;
                     byte[] bufferParts = null;
                     int index = 0;
-                    List<byte> mergedBuffer = message.imageRawData.ToList();
-
                     while (remained > 0)
                     {
                         bufferLength = (remained > BUFFER_MAX_SIZE) ? BUFFER_MAX_SIZE : remained;
