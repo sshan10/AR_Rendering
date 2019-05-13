@@ -38,6 +38,9 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
             }
         }
 
+        //이벤트 해제
+        InputManager.Instance.PopFallbackInputHandler();
+
         SceneManager.LoadScene(1, LoadSceneMode.Single);
         yield return null;
     }

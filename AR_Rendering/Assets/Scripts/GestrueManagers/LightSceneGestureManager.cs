@@ -8,6 +8,13 @@ using HoloToolkit.Unity.InputModule;
 public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
     public LightSceneMenuManager lightSceneMenuManagerObject;
+    
+    void Start()
+    {
+        //이벤트를 받기위한 인스턴스
+        InputManager.Instance.PushFallbackInputHandler(this.gameObject);
+    }
+
     IEnumerator OnHold()
     {
         yield return new WaitForSeconds(1f);
@@ -18,15 +25,12 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
     IEnumerator ButtonDownToLoadNewScene()
     {
         yield return new WaitForSeconds(1f);
+
+        //이벤트 해제
+        InputManager.Instance.PopFallbackInputHandler();
+
         SceneManager.LoadScene(2, LoadSceneMode.Single);
         yield return null;
-    }
-
-
-    void Start()
-    {
-        //이벤트를 받기위한 인스턴스
-        InputManager.Instance.PushFallbackInputHandler(this.gameObject);
     }
 
     // IHoldHandler는 Completed, Canceled, Started 세가지에 대한 구현 메소드가 필요하다.
