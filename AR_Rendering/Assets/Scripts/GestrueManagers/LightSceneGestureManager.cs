@@ -1,15 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using HoloToolkit.Unity.InputModule;
 
 public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
+    public LightSceneMenuManager lightSceneMenuManagerObject;
     IEnumerator OnHold()
     {
         yield return new WaitForSeconds(1f);
-        LightSceneMenuManager.Instance.ActivateMenu();
+        lightSceneMenuManagerObject.ActivateMenu();
+        yield return null;
+    }
+
+    IEnumerator ButtonDownToLoadNewScene()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
         yield return null;
     }
 
@@ -40,13 +49,15 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
     // IInputClickHandler 는 OnInputClicked에 대한 메소드 구현이 필요하다.
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
-        if (MenuManager.menuSelecting)
+        if (LightSceneMenuManager.menuSelecting)
         {
-            Ray ray;
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), 50f, 10))
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, 1 << 9))
             {
-
+                Debug.Log("Menu selected");
+                lightSceneMenuManagerObject.GetComponent<LightSceneMenuManager>().DeActivateMenu();
+                StartCoroutine(ButtonDownToLoadNewScene());
+                SpatialSceneMenuManager.menuSelecting = false;
             }
         } else
         {
