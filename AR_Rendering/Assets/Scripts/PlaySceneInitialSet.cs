@@ -6,16 +6,21 @@ using HoloToolkit.Unity.SpatialMapping;
 
 public class PlaySceneInitialSet : MonoBehaviour
 {
-    public SpatialMappingObserver onSceneMapppingObserver;
-    public ObjectSurfaceObserver onSceneGeommetryDevider;
+    public SpatialMappingObserver onSceneMappingObserver;
+    public SpatialMappingManager onSceneSpatialManager;
+    public ObjectSurfaceObserver onSceneGeommetryDivider;
 
     // Start is called before the first frame update
     void Start()
     {
-        onSceneMapppingObserver = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<SpatialMappingObserver>();
-        onSceneGeommetryDevider = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<ObjectSurfaceObserver>();
+        onSceneMappingObserver = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<SpatialMappingObserver>();
+        onSceneSpatialManager = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<SpatialMappingManager>();
+        onSceneGeommetryDivider = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<ObjectSurfaceObserver>();
 
-        onSceneMapppingObserver.enabled = false;
-        onSceneGeommetryDevider.enabled = false;
+        onSceneMappingObserver.enabled = false;
+        onSceneSpatialManager.DrawVisualMeshes = false;
+        // turned private bool variable of SpatialMappingManager.cs "autoStartObserver"to public.
+        onSceneSpatialManager.autoStartObserver = false;
+        onSceneGeommetryDivider.enabled = false;
     }
 }
