@@ -7,6 +7,7 @@ using HoloToolkit.Unity.SpatialMapping;
 public class LightingSceneInitialSet : MonoBehaviour
 {
     public SpatialMappingObserver onSceneMappingObserver;
+    public SpatialMappingManager onSceneSpatialManager;
     public ObjectSurfaceObserver onSceneGeommetryDivider;
 
     public GameObject informationObject;
@@ -20,10 +21,14 @@ public class LightingSceneInitialSet : MonoBehaviour
     void Start()
     {
         GameObject SpatialMappingObject = GameObject.FindGameObjectWithTag(TAG_SPATIAL_MAPPING_PREFAB);
-        onSceneMappingObserver = SpatialMappingObject.GetComponent<SpatialMappingObserver>();
-        onSceneGeommetryDivider = SpatialMappingObject.GetComponent<ObjectSurfaceObserver>();
+        onSceneMappingObserver = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<SpatialMappingObserver>();
+        onSceneSpatialManager = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<SpatialMappingManager>();
+        onSceneGeommetryDivider = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<ObjectSurfaceObserver>();
 
         onSceneMappingObserver.enabled = false;
+        onSceneSpatialManager.DrawVisualMeshes = false;
+        // turned private bool variable of SpatialMappingManager.cs "autoStartObserver"to public.
+        onSceneSpatialManager.autoStartObserver = false;
         onSceneGeommetryDivider.enabled = false;
 
         MRCam = GameObject.FindGameObjectWithTag(TAG_MAIN_CAMERA);

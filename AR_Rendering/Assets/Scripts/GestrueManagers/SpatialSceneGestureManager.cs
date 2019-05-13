@@ -7,7 +7,8 @@ using TMPro;
 
 public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
-    public SpatialSceneMenuManager SpatialSceneMenuManagerObject;        
+    public SpatialSceneMenuManager SpatialSceneMenuManagerObject;
+    public PhysicMaterial shadowMaterial;
 
     IEnumerator OnHold()
     {
@@ -19,6 +20,24 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
     IEnumerator ButtonDownToLoadNewScene()
     {
         yield return new WaitForSeconds(1f);
+
+        GameObject spatialMappingObject = GameObject.FindWithTag("SpatialMappingPrefab");
+        if(spatialMappingObject != null)
+        {
+            Transform[] geometries = spatialMappingObject.GetComponentsInChildren<Transform>();
+
+            foreach(Transform geometry in geometries)
+            {
+                geometry.gameObject.tag = "PartialGeometry";
+
+                MeshCollider collider = geometry.gameObject.GetComponent<MeshCollider>();
+                if(collider != null)
+                {
+                    collider.material = shadowMaterial;
+                }
+            }
+        }
+
         SceneManager.LoadScene(1, LoadSceneMode.Single);
         yield return null;
     }
