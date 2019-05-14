@@ -52,17 +52,25 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, float.MaxValue))
         {
-            if (hit.collider.gameObject.name == "ProceedButton")
+            if (hit.collider.gameObject.name == "PlaceButton")
             {
                 Debug.Log("Menu selected");
                 playSceneMenuManagerObject.DeActivateMenu();
-                StartCoroutine(ButtonDownToLoadNewScene());
+                // 배치 do
                 PlaySceneMenuManager.menuSelecting = false;
             }
-            else
+            else if(hit.collider.gameObject.name == "ResetButton")
             {
                 Debug.Log("Menu not selected");
-                playSceneMenuManagerObject.DeActivateWithoutSelectingMenu();
+                playSceneMenuManagerObject.DeActivateMenu();
+                // 리셋 do
+                PlaySceneMenuManager.menuSelecting = false;
+            }
+            else if (hit.collider.gameObject.name == "RestartButton")
+            {
+                Debug.Log("Menu not selected");
+                playSceneMenuManagerObject.DeActivateMenu();
+                // 초기화  do 
                 PlaySceneMenuManager.menuSelecting = false;
             }
         }

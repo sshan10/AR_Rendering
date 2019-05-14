@@ -27,6 +27,18 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
         yield return new WaitForSeconds(1f);
         InputManager.Instance.PopFallbackInputHandler();
         SceneManager.LoadScene(2, LoadSceneMode.Single);
+
+        GameObject spatialMappingObject = GameObject.Find("SpatialMapping");
+        if(spatialMappingObject != null)
+        {
+            MeshRenderer[] renderers = spatialMappingObject.GetComponentsInChildren<MeshRenderer>();
+
+            foreach(MeshRenderer renderer in renderers)
+            {
+                renderer.enabled = false;
+            }
+        }
+
         yield return null;
     }
 
