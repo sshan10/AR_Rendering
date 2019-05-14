@@ -44,5 +44,13 @@ public class SpatialSceneMenuManager : MonoBehaviour
             menuAnimator.SetTrigger("MenuTapped");
         }
     }
+
+    public void DeActivateWithoutSelectingMenu()
+    {
+        if (menuSelecting)
+        {
+            menuAnimator.SetTrigger("MenuNotTapped");
+        }
+    }
     //UI end
 }
