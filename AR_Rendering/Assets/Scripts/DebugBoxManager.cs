@@ -4,19 +4,15 @@ using TMPro;
 
 public class DebugBoxManager : MonoBehaviour
 {
-    public Renderer SphereRenderer;
-    public Material originMat;
+    public Image DebugBox;
     public TextMeshProUGUI Intensity;
     public TextMeshProUGUI Type;
 
     public void SetParams(string type, float intensity, Color color)
     {
+        this.DebugBox.color = color;
         this.Type.text = type;
         this.Intensity.text = string.Format("{0:0.00}", intensity);
-
-        Material newMat = new Material(originMat);
-        newMat.color = color;
-        SphereRenderer.material = newMat;
     }
 
     void Update()

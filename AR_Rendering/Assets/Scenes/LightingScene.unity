@@ -1470,7 +1470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PointLightPrefab: {fileID: 5705391030029025789, guid: 81abae6cf3626d6478935a37744274a5,
     type: 3}
-  DebugBoxPrefab: {fileID: 1459168241192935066, guid: 164efde0f06102e4cb53ac686fffc51e,
+  DebugBoxPrefab: {fileID: 1369138480149557488, guid: 164efde0f06102e4cb53ac686fffc51e,
     type: 3}
   DebugCanvasTransform: {fileID: 2066924126}
 --- !u!4 &2110404297
