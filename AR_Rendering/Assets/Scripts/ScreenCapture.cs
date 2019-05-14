@@ -85,9 +85,4 @@ public class ScreenCapture : MonoBehaviour
     {
         return hmdRotation;
     }
-
-    private static byte[] TextureToRawdata(Texture2D texture)
-    {
-        return texture.EncodeToJPG(100);
-    }
 }
