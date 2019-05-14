@@ -22,4 +22,9 @@ public class ImageUtil
 
         return sprite;
     }
+
+    public static byte[] TextureToRawdata(Texture2D texture)
+    {
+        return texture.EncodeToJPG(100);
+    }
 }

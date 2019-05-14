@@ -21,9 +21,8 @@ public class Message
 
         string position = Vector3ToString(hmdPosition);
         string rotation = Vector3ToString(hmdRotation);
-        string length = imageRawData.Length.ToString();
 
-        result = string.Format("{0}:{1}:{2}", position, rotation, length);
+        result = string.Format("{0}:{1}:", position, rotation);
         return result;
     }
 

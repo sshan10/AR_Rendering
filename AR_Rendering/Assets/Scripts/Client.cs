@@ -67,7 +67,8 @@ public class Client : MonoBehaviour
     public void Connect()
     {
         string ip = "10.20.11.122";
-        Debug.Log(string.Format("Server IP: {0}", ip));
+        //string ip = "192.168.0.4";
+        //Debug.Log(string.Format("Server IP: {0}", ip));
 
         try
         {
@@ -168,31 +169,34 @@ public class Client : MonoBehaviour
             Task.Run(() =>
             {
                 try
-                {
-                    // sending a message header             
+                {        
+                    // buffer settings
                     byte[] buffer = Encoding.UTF8.GetBytes(message.ToString());
-                    int bufferLength = buffer.Length;
-                    byte[] bufferSize = BitConverter.GetBytes(bufferLength);
 
+                    //Debug.LogFormat("HmdInfo Lenght: {0} + captured buffer length: {1} = {2}", buffer.Length, message.imageRawData.Length, buffer.Length + message.imageRawData.Length);
+
+                    int bufferLength = buffer.Length + message.imageRawData.Length;
+                    byte[] bufferSize = BitConverter.GetBytes(bufferLength);
+                    
+
+
+                    // sending a message header    
                     writer.Write(bufferSize, 0, bufferSize.Length);
                     writer.Flush();
+                    
 
+                    // sending message body : hmd position, hmd rotation, image raw data
+                    List<byte> mergedBuffer = new List<byte>();
 
+                    // add the hmd position, hmd rotation
+                    mergedBuffer.AddRange(buffer);
 
+                    // add the image raw data
+                    mergedBuffer.AddRange(message.imageRawData);
 
-                    // sending message body 1/2 : hmd position, hmd rotation, image length
-                    writer.Write(buffer, 0, buffer.Length);
-                    writer.Flush();
-
-
-
-
-                    // sending message body 2/2 : image raw data
-                    int remained = message.imageRawData.Length;
+                    int remained = mergedBuffer.Count;
                     byte[] bufferParts = null;
                     int index = 0;
-                    List<byte> mergedBuffer = message.imageRawData.ToList();
-
                     while (remained > 0)
                     {
                         bufferLength = (remained > BUFFER_MAX_SIZE) ? BUFFER_MAX_SIZE : remained;
