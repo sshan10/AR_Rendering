@@ -11,7 +11,7 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
     public static bool placing;
     IEnumerator OnHold()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         playSceneMenuManagerObject.ActivateMenu();
         yield return null;
     }
@@ -62,13 +62,13 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
             }
             else if(hit.collider.gameObject.name == "PlaceButton"&& placing)
             {
-                placing = flase;
+                placing = false;
             }
             else if(hit.collider.gameObject.name == "ResetButton")
             {
                 Debug.Log("Menu not selected");
                 playSceneMenuManagerObject.DeActivateMenu();
-                // 리셋 do
+                StartCoroutine(ButtonDownToLoadNewScene());
                 PlaySceneMenuManager.menuSelecting = false;
             }
             else if (hit.collider.gameObject.name == "RestartButton")
