@@ -7,10 +7,10 @@ using HoloToolkit.Unity.InputModule;
 
 public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
-    public LightSceneMenuManager lightSceneMenuManagerObject;
+    public LightSceneMenuManager lightSceneMenuManagerObject = null;
     IEnumerator OnHold()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         lightSceneMenuManagerObject.ActivateMenu();
         yield return null;
     }
@@ -18,6 +18,7 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
     IEnumerator ButtonDownToLoadNewScene()
     {
         yield return new WaitForSeconds(1f);
+        InputManager.Instance.PopFallbackInputHandler();
         SceneManager.LoadScene(2, LoadSceneMode.Single);
         yield return null;
     }
@@ -49,29 +50,32 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
     // IInputClickHandler 는 OnInputClicked에 대한 메소드 구현이 필요하다.
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
-        if (LightSceneMenuManager.menuSelecting)
+        if (LightSceneMenuManager.menuSelecting && lightSceneMenuManagerObject != null)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, 1 << 9))
+           RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, float.MaxValue))
             {
-                Debug.Log("Menu selected");
-                lightSceneMenuManagerObject.GetComponent<LightSceneMenuManager>().DeActivateMenu();
-                StartCoroutine(ButtonDownToLoadNewScene());
-                SpatialSceneMenuManager.menuSelecting = false;
+                if (hit.collider.gameObject.name == "ProceedButton")
+                {
+                    Debug.Log("Menu selected");
+                    lightSceneMenuManagerObject.DeActivateMenu();
+                    StartCoroutine(ButtonDownToLoadNewScene());
+                    LightSceneMenuManager.menuSelecting = false;
+                }
+                else
+                {
+                    Debug.Log("Menu not selected");
+                    lightSceneMenuManagerObject.DeActivateWithoutSelectingMenu();
+                    LightSceneMenuManager.menuSelecting = false;
+                }
             }
-        } else
-        {
-            // On Capture
-
-            if(ScreenCapture.Capturing)
+            else
             {
-                return;
+                Debug.Log("Menu not selected");
+                lightSceneMenuManagerObject.DeActivateWithoutSelectingMenu();
+                LightSceneMenuManager.menuSelecting = false;
             }
-
-
-            ScreenCapture.Capture();
-
-        }
+        } 
     }
     // Endof InputClickerHandler Event Handler
 

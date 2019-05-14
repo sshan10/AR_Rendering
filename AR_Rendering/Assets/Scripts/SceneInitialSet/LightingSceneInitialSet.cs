@@ -13,20 +13,18 @@ public class LightingSceneInitialSet : MonoBehaviour
     public GameObject informationObject;
     public GameObject MRCam;
 
-    private readonly string TAG_SPATIAL_MAPPING_PREFAB = "SpatialMappingPrefab";
     private readonly string TAG_MAIN_CAMERA = "MainCamera";
 
     private float distanceFromCam = 2f;
 
     void Start()
     {
-        GameObject SpatialMappingObject = GameObject.FindGameObjectWithTag(TAG_SPATIAL_MAPPING_PREFAB);
-        onSceneMappingObserver = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<SpatialMappingObserver>();
-        onSceneSpatialManager = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<SpatialMappingManager>();
-        onSceneGeommetryDivider = GameObject.FindGameObjectWithTag("SpatialMappingPrefab").GetComponent<ObjectSurfaceObserver>();
+        GameObject SpatialMappingObject = GameObject.Find("SpatialMapping");
+        onSceneMappingObserver = SpatialMappingObject.GetComponent<SpatialMappingObserver>();
+        onSceneSpatialManager = SpatialMappingObject.GetComponent<SpatialMappingManager>();
+        onSceneGeommetryDivider = SpatialMappingObject.GetComponent<ObjectSurfaceObserver>();
 
         onSceneMappingObserver.enabled = false;
-        // turned private bool variable of SpatialMappingManager.cs "autoStartObserver"to public.
         onSceneSpatialManager.autoStartObserver = false;
         onSceneGeommetryDivider.enabled = false;
 
