@@ -49,22 +49,28 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
     // IInputClickHandler 는 OnInputClicked에 대한 메소드 구현이 필요하다.
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
-        if (LightSceneMenuManager.menuSelecting)
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, float.MaxValue))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, 1 << 9))
+            if (hit.collider.gameObject.name == "ProceedButton")
             {
                 Debug.Log("Menu selected");
-                playSceneMenuManagerObject.GetComponent<PlaySceneMenuManager>().DeActivateMenu();
+                playSceneMenuManagerObject.DeActivateMenu();
                 StartCoroutine(ButtonDownToLoadNewScene());
-                SpatialSceneMenuManager.menuSelecting = false;
+                PlaySceneMenuManager.menuSelecting = false;
             }
             else
             {
                 Debug.Log("Menu not selected");
-                playSceneMenuManagerObject.GetComponent<PlaySceneMenuManager>().DeActivateWithoutSelectingMenu();
-                SpatialSceneMenuManager.menuSelecting = false;
+                playSceneMenuManagerObject.DeActivateWithoutSelectingMenu();
+                PlaySceneMenuManager.menuSelecting = false;
             }
+        }
+        else
+        {
+            Debug.Log("Menu not selected");
+            playSceneMenuManagerObject.DeActivateWithoutSelectingMenu();
+            PlaySceneMenuManager.menuSelecting = false;
         }
     }
     // Endof InputClickerHandler Event Handler
