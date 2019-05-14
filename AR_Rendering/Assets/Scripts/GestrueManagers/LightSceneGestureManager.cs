@@ -8,6 +8,7 @@ using HoloToolkit.Unity.InputModule;
 public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
     public LightSceneMenuManager lightSceneMenuManagerObject;
+    public Material arGroundMaterial;
     
     void Start()
     {
@@ -35,7 +36,7 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
 
             foreach(MeshRenderer renderer in renderers)
             {
-                renderer.enabled = false;
+                renderer.material = arGroundMaterial;
             }
         }
 
