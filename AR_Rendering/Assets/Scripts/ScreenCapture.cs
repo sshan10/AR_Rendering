@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Linq;
 using UnityEngine.XR.WSA.WebCam;
+using System.Collections.Generic;
 
 public class ScreenCapture : MonoBehaviour
 {
     public static bool Capturing = false;
 
     private static PhotoCapture photoCaptureObject = null;
-    private static Texture2D capturedTexture = null;
     private static Vector3 hmdPosition, hmdRotation;
-    
+    private static Texture2D capturedTexture = null;
+
     public static void Capture()
     {
         Capturing = true;
@@ -38,26 +39,27 @@ public class ScreenCapture : MonoBehaviour
     }
 
     private static void OnCapturePhotoToMemory(PhotoCapture.PhotoCaptureResult result, PhotoCaptureFrame photoCaptureFrame)
-    { 
-        if(capturedTexture == null)
+    {
+        if(!result.success)
         {
             return;
         }
-
+        
         photoCaptureFrame.UploadImageDataToTexture(capturedTexture);
-        photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
 
         Message message = new Message()
         {
             hmdPosition = GetHMDPosition(),
             hmdRotation = GetHMDRotation(),
-            imageRawData = TextureToRawdata(capturedTexture)
+            imageRawData = capturedTexture.EncodeToJPG(100)
         };
-
+    
         if (Client.Instance != null &&  Client.Instance.IsServerRunning())
         {
             Client.Instance.SendToServer(message);
         }
+
+        photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
 
         Capturing = false;
     }
@@ -82,10 +84,5 @@ public class ScreenCapture : MonoBehaviour
     private static Vector3 GetHMDRotation()
     {
         return hmdRotation;
-    }
-
-    private static byte[] TextureToRawdata(Texture2D texture)
-    {
-        return texture.EncodeToJPG(100);
     }
 }
