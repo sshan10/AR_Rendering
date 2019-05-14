@@ -55,21 +55,21 @@ public class LightManager : MonoBehaviour
         
         if(debug)
         {
-            CreateDebugBox(lightInfo);
+            CreateDebugBox(lightInfo, box);
         }
 
         return lightObject;
     }
 
-    public GameObject CreateDebugBox(LightInfo info)
+    public GameObject CreateDebugBox(LightInfo lightInfo, DetectionBox originInfo)
     {
         GameObject debugBox = Instantiate(DebugBoxPrefab);
         debugBox.transform.SetParent(DebugCanvasTransform);
-        debugBox.transform.position = info.position;
+        debugBox.transform.position = lightInfo.position;
 
-
+        string lightType = (originInfo.id == 1 ? "Area" : (originInfo.id == 2 ? "Point" : "Spot" ));
         DebugBoxManager debugBoxManager = debugBox.GetComponent<DebugBoxManager>() as DebugBoxManager;
-        debugBoxManager.SetParams(info.light.type, info.light.intensity, info.light.color);
+        debugBoxManager.SetParams(lightType, lightInfo.light.intensity, lightInfo.light.color);
 
         return debugBox;
     }

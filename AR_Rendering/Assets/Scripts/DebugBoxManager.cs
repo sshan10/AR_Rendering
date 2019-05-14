@@ -9,9 +9,9 @@ public class DebugBoxManager : MonoBehaviour
     public TextMeshProUGUI Intensity;
     public TextMeshProUGUI Type;
 
-    public void SetParams(LightType type, float intensity, Color color)
+    public void SetParams(string type, float intensity, Color color)
     {
-        this.Type.text = type.ToString();
+        this.Type.text = type;
         this.Intensity.text = string.Format("{0:0.00}", intensity);
 
         Material newMat = new Material(originMat);
