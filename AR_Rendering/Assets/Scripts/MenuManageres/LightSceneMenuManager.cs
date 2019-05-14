@@ -4,21 +4,13 @@ using UnityEngine;
 
 public class LightSceneMenuManager : MonoBehaviour
 {
-    public static LightSceneMenuManager Instance = null;
-
     public GameObject menuObject;
 
     private float menuGeneratingDistance = 1f;
 
     private Camera mixedRealityCamera;
-    private Transform initialTransform;
     private Animator menuAnimator;
     public static bool menuSelecting = false;
-
-    void Awake()
-    {
-        Instance = this;
-    }
 
     void Start()
     {
@@ -47,10 +39,12 @@ public class LightSceneMenuManager : MonoBehaviour
     //called when menu Tapped
     public void DeActivateMenu()
     {
-        if (menuSelecting)
-        {
-            menuAnimator.SetTrigger("MenuTapped");
-        }
+         menuAnimator.SetTrigger("MenuTapped");
+    }
+
+    public void DeActivateWithoutSelectingMenu()
+    {
+         menuAnimator.SetTrigger("MenuNotTapped");
     }
     //UI end
 }

@@ -80,11 +80,26 @@ public class SpatialSceneGestureManager : MonoBehaviour, IInputClickHandler, IHo
         if(SpatialSceneMenuManager.menuSelecting)
         {
             RaycastHit hit;
-            if(Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)),out hit, 1<<9))
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, float.MaxValue))
             {
-                Debug.Log("Menu selected");
-                SpatialSceneMenuManagerObject.GetComponent<SpatialSceneMenuManager>().DeActivateMenu();
-                StartCoroutine(ButtonDownToLoadNewScene());
+                if (hit.collider.gameObject.name == "ProceedButton")
+                {
+                    Debug.Log("Menu selected");
+                    SpatialSceneMenuManagerObject.GetComponent<SpatialSceneMenuManager>().DeActivateMenu();
+                    StartCoroutine(ButtonDownToLoadNewScene());
+                    SpatialSceneMenuManager.menuSelecting = false;
+                }
+                 else
+                {
+                    Debug.Log("Menu not selected");
+                    SpatialSceneMenuManagerObject.GetComponent<SpatialSceneMenuManager>().DeActivateWithoutSelectingMenu();
+                    SpatialSceneMenuManager.menuSelecting = false;
+                }
+            }
+            else
+            {
+                Debug.Log("Menu not selected");
+                SpatialSceneMenuManagerObject.GetComponent<SpatialSceneMenuManager>().DeActivateWithoutSelectingMenu();
                 SpatialSceneMenuManager.menuSelecting = false;
             }
         }
