@@ -50,9 +50,14 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
     // IInputClickHandler 는 OnInputClicked에 대한 메소드 구현이 필요하다.
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
-        if (LightSceneMenuManager.menuSelecting && lightSceneMenuManagerObject != null)
+        if (LightSceneMenuManager.menuSelecting)
         {
-           RaycastHit hit;
+            if (lightSceneMenuManagerObject != null)
+            {
+                return;
+            }
+
+            RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, float.MaxValue))
             {
                 if (hit.collider.gameObject.name == "ProceedButton")
@@ -75,7 +80,14 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
                 lightSceneMenuManagerObject.DeActivateWithoutSelectingMenu();
                 LightSceneMenuManager.menuSelecting = false;
             }
-        } 
+        }
+        else
+        {
+            if (!ScreenCapture.Capturing)
+            {
+                ScreenCapture.Capture();
+            }
+        }
     }
     // Endof InputClickerHandler Event Handler
 
