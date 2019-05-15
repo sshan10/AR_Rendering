@@ -8,6 +8,7 @@ using HoloToolkit.Unity.InputModule;
 public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
     public LightSceneMenuManager lightSceneMenuManagerObject;
+    public Material arGroundMaterial;
     
     void Start()
     {
@@ -27,6 +28,18 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
         yield return new WaitForSeconds(1f);
         InputManager.Instance.PopFallbackInputHandler();
         SceneManager.LoadScene(2, LoadSceneMode.Single);
+
+        GameObject spatialMappingObject = GameObject.Find("SpatialMapping");
+        if(spatialMappingObject != null)
+        {
+            MeshRenderer[] renderers = spatialMappingObject.GetComponentsInChildren<MeshRenderer>();
+
+            foreach(MeshRenderer renderer in renderers)
+            {
+                renderer.material = arGroundMaterial;
+            }
+        }
+
         yield return null;
     }
 
@@ -50,13 +63,9 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
     // IInputClickHandler 는 OnInputClicked에 대한 메소드 구현이 필요하다.
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
+        Debug.Log("tap");
         if (LightSceneMenuManager.menuSelecting)
         {
-            if (lightSceneMenuManagerObject != null)
-            {
-                return;
-            }
-
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, float.MaxValue))
             {

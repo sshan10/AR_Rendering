@@ -4,18 +4,20 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: HoloToolkit_Default
   m_Shader: {fileID: 4800000, guid: d45c0efca53019e43891b0f610f8146e, type: 3}
-  m_ShaderKeywords: _BORDER_LIGHT_USES_HOVER_COLOR _DISABLE_ALBEDO_MAP _SPECULARHIGHLIGHTS_ON
-    _SPECULAR_HIGHLIGHTS _USEAMBIENT_ON _USECOLOR_ON _USEDIFFUSE_ON _USEMAINCOLOR_ON
+  m_ShaderKeywords: _ALPHABLEND_ON _BORDER_LIGHT_USES_HOVER_COLOR _DISABLE_ALBEDO_MAP
+    _SPECULARHIGHLIGHTS_ON _SPECULAR_HIGHLIGHTS _USEAMBIENT_ON _USECOLOR_ON _USEDIFFUSE_ON
+    _USEMAINCOLOR_ON
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: Opaque
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -93,11 +95,11 @@ Material:
     - _ColorWriteMask: 15
     - _Cull: 2
     - _CullMode: 2
-    - _CustomMode: 0
+    - _CustomMode: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DirectionalLight: 0
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EdgeSmoothingValue: 0.002
     - _EnableEmission: 0
     - _EnableHoverColorOpaqueOverride: 0
@@ -117,7 +119,7 @@ Material:
     - _HoverLightOpaque: 0
     - _InnerGlow: 0
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 2
     - _NearPlaneFade: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -136,7 +138,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Specular: 0.128
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _UVSec: 0
     - _UseAmbient: 1
     - _UseBumpMap: 0
@@ -154,11 +156,11 @@ Material:
     - _UseSpecularMap: 0
     - _UseVertexColor: 0
     - _ZTest: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - _ClipPlane: {r: 0, g: 1, b: 0, a: 0}
     - _ClippingPlaneBorderColor: {r: 1, g: 0.2, b: 0, a: 1}
-    - _Color: {r: 0.8897059, g: 0.8897059, b: 0.8897059, a: 1}
+    - _Color: {r: 0.8897059, g: 0.8897059, b: 0.8897059, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvironmentColorX: {r: 1, g: 0, b: 0, a: 1}
