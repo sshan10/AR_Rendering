@@ -10,6 +10,7 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
     public GameObject castingObstacle;
     public PlaySceneMenuManager playSceneMenuManagerObject;
     public static bool placing;
+    public GameObject interactionContentsParent;
 
     IEnumerator OnHold()
     {
@@ -30,6 +31,8 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
     {
         //이벤트를 받기위한 인스턴스
         InputManager.Instance.PushFallbackInputHandler(this.gameObject);
+
+
     }
 
     // IHoldHandler는 Completed, Canceled, Started 세가지에 대한 구현 메소드가 필요하다.
@@ -67,6 +70,12 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
             else if(placing)
             {
                 placing = false;
+                Transform[] transforms = interactionContentsParent.GetComponentsInChildren<Transform>();
+
+                foreach (Transform transform in transforms)
+                {
+                    transform.gameObject.layer = default;
+                }
                 Debug.Log("placing Complete");
             }
             else if(hit.collider.gameObject.name == "ResetButton")
