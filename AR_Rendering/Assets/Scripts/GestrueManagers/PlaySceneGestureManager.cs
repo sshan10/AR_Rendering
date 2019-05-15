@@ -7,8 +7,10 @@ using HoloToolkit.Unity.InputModule;
 
 public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHandler
 {
+    public GameObject castingObstacle;
     public PlaySceneMenuManager playSceneMenuManagerObject;
     public static bool placing;
+
     IEnumerator OnHold()
     {
         yield return new WaitForSeconds(0.5f);
@@ -53,20 +55,23 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit, float.MaxValue))
         {
+            Debug.Log("Tap");
             if (hit.collider.gameObject.name == "PlaceButton" && !placing)
             {
                 Debug.Log("Menu selected");
                 playSceneMenuManagerObject.DeActivateMenu();
+                castingObstacle.SetActive(true);
                 placing = true;
                 PlaySceneMenuManager.menuSelecting = false;
             }
-            else if(hit.collider.gameObject.name == "PlaceButton"&& placing)
+            else if(placing)
             {
                 placing = false;
+                Debug.Log("placing Complete");
             }
             else if(hit.collider.gameObject.name == "ResetButton")
             {
-                Debug.Log("Menu not selected");
+                Debug.Log("Reset Menu selected");
                 playSceneMenuManagerObject.DeActivateMenu();
                 StartCoroutine(ButtonDownToLoadNewScene());
                 PlaySceneMenuManager.menuSelecting = false;
