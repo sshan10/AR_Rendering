@@ -74,7 +74,7 @@ public class PlaySceneGestureManager: MonoBehaviour, IInputClickHandler, IHoldHa
 
                 foreach (Transform transform in transforms)
                 {
-                    transform.gameObject.layer = default;
+                    transform.gameObject.layer = LayerMask.NameToLayer("Default");
                 }
                 Debug.Log("placing Complete");
             }
