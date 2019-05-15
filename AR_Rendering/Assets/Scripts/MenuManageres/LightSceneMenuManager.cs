@@ -33,6 +33,7 @@ public class LightSceneMenuManager : MonoBehaviour
             menuAnimator.SetTrigger("HoldGestureWithoutSelected");
 
             menuSelecting = true;
+            Debug.Log("menuSelecting");
         }
     }
 
