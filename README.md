@@ -1,5 +1,6 @@
 # AR_Rendering
 University &amp; Industry cowork project (Team VAR &amp; Alchera Inc)
+Generate LightMap for realistic Rendering. 
 
 # Team_VAR
 - Yuriver 
