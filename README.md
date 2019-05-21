@@ -1,5 +1,5 @@
 # AR_Rendering
-University &amp; Industry cowork project (Team VAR &amp; Alchera Inc)
+University &amp; Industry cowork project (Team VAR &amp; Alchera Inc.)
 Generate LightMap for realistic Rendering. 
 
 Our project is divided into Client(HoloLens), Server(PC), and Machine Learning(Neural Network Model, Inference) parts.
