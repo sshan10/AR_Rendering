@@ -2,7 +2,7 @@
 University &amp; Industry cowork project (Team VAR &amp; Alchera Inc)
 Generate LightMap for realistic Rendering. 
 
-Our project is divided into client, server, and machine learning parts.
+Our project is divided into Client(HoloLens), Server(PC), and Machine Learning(Neural Network Model, Inference) parts.
 - Part1. Client: https://github.com/sshan10/AR_Rendering
 - Part2. Server: https://github.com/yuriver/ServerForHololens
 - Part3. ML: 
