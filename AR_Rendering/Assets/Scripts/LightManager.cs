@@ -45,8 +45,9 @@ public class LightManager : MonoBehaviour
         LightInfo lightInfo = new LightInfo()
         {
             position = lightObject.transform.position,
-            rotation = lightObject.transform.eulerAngles,        
-            light = ApplyLightProperties(lightObject, box)
+            rotation = lightObject.transform.eulerAngles,
+            light = ApplyLightProperties(lightObject, box),
+            collider = lightObject.GetComponent<BoxCollider>()
         };
 
         AddLight(lightInfo);
