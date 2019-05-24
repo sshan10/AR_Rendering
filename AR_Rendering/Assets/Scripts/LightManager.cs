@@ -51,8 +51,6 @@ public class LightManager : MonoBehaviour
         };
 
         AddLight(lightInfo);
-
-
         
         if(debug)
         {
