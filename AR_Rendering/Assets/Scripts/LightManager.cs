@@ -106,7 +106,7 @@ public class LightManager : MonoBehaviour
         return type;
     }
 
-    private static float MAX_INTENSITY = 8f;
+    private static float MAX_INTENSITY = 5f;
     float GetLightIntensity(float intensity)
     {
         float lightIntensity = intensity * MAX_INTENSITY;

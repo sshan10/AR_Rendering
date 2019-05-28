@@ -66,7 +66,7 @@ public class Client : MonoBehaviour
 
     public void Connect()
     {
-        string ip = "10.20.11.122";
+        string ip = "10.20.23.213";
         //string ip = "192.168.0.4";
         //Debug.Log(string.Format("Server IP: {0}", ip));
 
