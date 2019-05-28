@@ -11,7 +11,7 @@ Our project is divided into Client(HoloLens), Server(PC), and Machine Learning(N
 https://www.youtube.com/watch?v=I9PtK627iCI
 
 # Team_VAR
-- Yuriver 
+- Yuriver(Bonokong) 
   - unity client development
   - network development
   
