@@ -8,11 +8,11 @@ using HoloToolkit.Unity.InputModule;
 public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
     public LightSceneMenuManager lightSceneMenuManagerObject;
+
     public Material arGroundMaterial;
     
     void Start()
     {
-        //이벤트를 받기위한 인스턴스
         InputManager.Instance.PushFallbackInputHandler(this.gameObject);
     }
 
@@ -32,7 +32,8 @@ public class LightSceneGestureManager : MonoBehaviour, IInputClickHandler, IHold
         GameObject spatialMappingObject = GameObject.Find("SpatialMapping");
         if(spatialMappingObject != null)
         {
-            MeshRenderer[] renderers = spatialMappingObject.GetComponentsInChildren<MeshRenderer>();
+            MeshRenderer[] renderers = 
+                spatialMappingObject.GetComponentsInChildren<MeshRenderer>();
 
             foreach(MeshRenderer renderer in renderers)
             {
