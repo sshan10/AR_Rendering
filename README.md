@@ -11,9 +11,8 @@ Our project is divided into Client(HoloLens), Server(PC), and Machine Learning(N
 https://www.youtube.com/watch?v=I9PtK627iCI
 
 # Example Scene
-Experiment Setting
-
-
+- Experiment Setting
+<img width="150" src="C:\Users\GIGABYTE\Desktop\ExperimentSetting.jpg" alt="Experiment Setting Img">
 
 # Team_VAR
 - sshan10
