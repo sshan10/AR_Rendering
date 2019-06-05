@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightSceneMenuManagerObject: {fileID: 526169688}
-  arGroundMaterial: {fileID: 2100000, guid: 19d4c61b722c0467bb5fcea520e4a298, type: 2}
+  arGroundMaterial: {fileID: 2100000, guid: db8d790a0e3d33d44962491f414cd869, type: 2}
 --- !u!1 &526169686
 GameObject:
   m_ObjectHideFlags: 0
