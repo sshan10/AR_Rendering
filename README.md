@@ -15,7 +15,7 @@ https://www.youtube.com/watch?v=I9PtK627iCI
 ![Image of Experiment Setting](./TestImages/ExperimentSetting.jpg)
 
 - Changing Light ColorResult
-![White](./TestImages/w.jpg)|![Blue](./TestImages/b.jpg)|![Red](./TestImages/r.jpg)
+|  ![White](./TestImages/w.jpg)  |  ![Blue](./TestImages/b.jpg)  |  ![Red](./TestImages/r.jpg) | 
 
 # Team_VAR
 - sshan10
