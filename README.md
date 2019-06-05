@@ -10,14 +10,18 @@ Our project is divided into Client(HoloLens), Server(PC), and Machine Learning(N
 # Demonstration video
 https://www.youtube.com/watch?v=I9PtK627iCI
 
+# Example Scene
+- Experiment Setting
+<img width="150" src="C:\Users\GIGABYTE\Desktop\ExperimentSetting.jpg" alt="Experiment Setting Img">
+
 # Team_VAR
-- Yuriver(Bonokong) 
-  - unity client development
-  - network development
-  
 - sshan10
   - unity client development
   - graphic optimization
+
+- Yuriver(Bonokong) 
+  - unity client development
+  - network development
   
 - Kim.MJ
   - mahchine learning
