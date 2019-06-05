@@ -12,7 +12,7 @@ https://www.youtube.com/watch?v=I9PtK627iCI
 
 # Example Scene
 - Experiment Setting
-<img width="150" src="C:\Users\GIGABYTE\Desktop\ExperimentSetting.jpg" alt="Experiment Setting Img">
+![Image of Experiment Setting](./TestImages/ExperimentSetting.jpg)
 
 # Team_VAR
 - sshan10
