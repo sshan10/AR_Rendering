@@ -16,9 +16,9 @@ https://www.youtube.com/watch?v=I9PtK627iCI
 
 - Changing Light ColorResult:
 
-|        White Light        |        Blue Light         |        Red Light         |
+| White Light | Blue Light | Red Light |
 | :-----------------------: | :-----------------------: | : ---------------------: |
-|  ![](./TestImages/w.jpg)  |  ![](./TestImages/b.jpg)  |  ![](./TestImages/r.jpg) | 
+| ![](./TestImages/w.jpg) | ![](./TestImages/b.jpg) | ![](./TestImages/r.jpg) | 
 
 # Team_VAR
 - sshan10
